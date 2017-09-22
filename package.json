@@ -1,0 +1,26 @@
+{
+  "name": "babel-plugin-annotate-pure-calls",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andarist/babel-plugin-annotate-pure-calls.git"
+  },
+  "keywords": [
+    "babel",
+    "plugin",
+    "pure",
+    "side-effects",
+    "uglifyjs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Andarist/babel-plugin-annotate-pure-calls/issues"
+  },
+  "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme"
+}
