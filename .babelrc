@@ -1,0 +1,13 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "loose": true,
+        "targets": {
+          "node": 4
+        }
+      }
+    ]
+  ]
+}

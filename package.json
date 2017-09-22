@@ -1,11 +1,13 @@
 {
   "name": "babel-plugin-annotate-pure-calls",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Babel plugin for annotating automatically pure function calls.",
+  "author": "Mateusz Burzyński <mateuszburzynski@gmail.com> (https://github.com/Andarist)",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Andarist/babel-plugin-annotate-pure-calls.git"
@@ -17,10 +19,35 @@
     "side-effects",
     "uglifyjs"
   ],
-  "author": "",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Andarist/babel-plugin-annotate-pure-calls/issues"
   },
-  "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme"
+  "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme",
+  "dependencies": {
+    "babel-plugin-syntax-dynamic-import": "^6.18.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-helper-plugin-test-runner": "^6.24.1",
+    "babel-jest": "^21.0.2",
+    "babel-preset-env": "^1.6.0",
+    "husky": "^0.14.3",
+    "jest": "^21.1.0",
+    "lint-staged": "^4.2.2",
+    "prettier": "^1.7.0"
+  },
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "self-link": "npm link && npm link $npm_package_name",
+    "pretest": "if [ ! -d ./node_modules/$npm_package_name ]; then npm run self-link; else npm run build; fi",
+    "test": "jest",
+    "test-only": "jest",
+    "precommit": "lint-staged",
+    "prepare": "npm run build",
+    "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
+    "prerelease": "npm run prepare && npm test",
+    "release:patch": "npm run prerelease && npm version patch && git push --follow-tags && npm publish",
+    "release:minor": "npm run prerelease && npm version minor && git push --follow-tags && npm publish",
+    "release:major": "npm run prerelease && npm version major && git push --follow-tags && npm publish"
+  }
 }
