@@ -25,6 +25,13 @@ export default () => ({
   inherits: syntax,
   visitor: {
     'CallExpression|NewExpression'(path) {
+      const callee = path.get('callee')
+
+      if (callee.isIdentifier() && callee.get('name').node === 'require') {
+        path.skip()
+        return
+      }
+
       if (!isTopLevel(path)) {
         let functionParent
 
