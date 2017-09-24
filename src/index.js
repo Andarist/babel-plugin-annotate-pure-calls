@@ -21,6 +21,13 @@ const isTopLevel = path => {
   return path.getStatementParent().parentPath.isProgram()
 }
 
+const isIIFE = path => {
+  return (
+    path.isCallExpression() &&
+    (path.get('callee').isFunctionExpression() || path.get('callee').isArrowFunctionExpression())
+  )
+}
+
 export default () => ({
   inherits: syntax,
   visitor: {
@@ -38,7 +45,7 @@ export default () => ({
         do {
           functionParent = (functionParent || path).getFunctionParent()
 
-          if (!functionParent.parentPath.isCallExpression()) {
+          if (!isIIFE(functionParent.parentPath)) {
             return
           }
         } while (!isTopLevel(functionParent))
