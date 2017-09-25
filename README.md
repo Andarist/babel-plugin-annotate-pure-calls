@@ -39,3 +39,8 @@ require("babel-core").transform("code", {
   plugins: ["annotate-pure-calls"]
 });
 ```
+
+## Similar projects
+
+- [annotate-pure-call-in-variable-declarator](https://github.com/morlay/babel-plugin-annotate-pure-call-in-variable-declarator)
+
