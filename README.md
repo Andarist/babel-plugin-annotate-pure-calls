@@ -7,6 +7,15 @@ This plugins helps with automatic **#\_\_PURE\_\_** annotation insertion. It add
 
 **NOTE:** It might break your code, so the caution is advised. Target audience for the plugin are libraries, which in vast major of use cases do not introduce side effects in top level calls. That doesn't mean that application bundles cannot benefit from the plugin.
 
+## Pure calls
+```js
+// pure call
+var inc = add()
+
+// clearly impure - no assignment context
+mutate({ prop: 'value' })
+```
+
 ## Top level calls
 
 Top level call (in terms of this plugin) is one that gets executed during script initialization. So it is every call located at the root of a file, but also a call in an IIFE that gets executed at startup (including nested ones).
