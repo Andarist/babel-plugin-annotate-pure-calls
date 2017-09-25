@@ -34,7 +34,7 @@ babel --plugins annotate-pure-calls script.js
 ### Via Node API
 
 ```javascript
-require("babel-core").transform("code", {
+require("babel-core").transform("var inc = add(1)", {
   plugins: ["annotate-pure-calls"]
 });
 ```
