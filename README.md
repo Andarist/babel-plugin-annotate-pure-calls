@@ -10,7 +10,7 @@ This plugins helps with automatic **#\_\_PURE\_\_** annotation insertion. It add
 ## Pure calls
 ```js
 // pure call
-var inc = add()
+var inc = add(1)
 
 // clearly impure - no assignment context
 mutate({ prop: 'value' })
