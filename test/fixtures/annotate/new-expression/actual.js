@@ -1,1 +1,3 @@
-wait100 = new Promise(resolve => setTimeout(resolve, 100))
+wait100 = new Promise(resolve => {
+	setTimeout(resolve, 100)
+})

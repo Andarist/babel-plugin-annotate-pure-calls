@@ -27,7 +27,7 @@ const isUsedAsCallee = path => {
   return path.parentPath.get('callee') === path
 }
 
-const isTopLevel = path => path.getStatementParent().parentPath.isProgram()
+const isTopLevel = path => path.getFunctionParent().isProgram()
 
 const isExecutedDuringInitialization = path => {
   if (isTopLevel(path)) {
