@@ -29,11 +29,6 @@ const isUsedAsCallee = path => {
 
 const isTopLevel = path => path.getStatementParent().parentPath.isProgram()
 
-const isIIFE = path => {
-  const callee = path.get('callee')
-  return path.isCallExpression() && (callee.isFunctionExpression() || callee.isArrowFunctionExpression())
-}
-
 const callableExpressionVisitor = path => {
   if (isUsedAsCallee(path)) {
     path.skip()
@@ -46,7 +41,7 @@ const callableExpressionVisitor = path => {
     do {
       functionParent = (functionParent || path).getFunctionParent()
 
-      if (!isIIFE(functionParent.parentPath)) {
+      if (!isUsedAsCallee(functionParent)) {
         return
       }
     } while (!isTopLevel(functionParent))
