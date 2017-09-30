@@ -36,7 +36,7 @@ const isIIFE = path => {
 
 const callableExpressionVisitor = path => {
   if (isUsedAsCallee(path)) {
-    // TODO: check if it's ok to call path.skip here
+    path.skip()
     return
   }
 
