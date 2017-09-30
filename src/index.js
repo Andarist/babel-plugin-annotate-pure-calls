@@ -17,21 +17,64 @@ function annotateAsPure(path) {
   path.addComment('leading', PURE_ANNOTATION)
 }
 
-const isTopLevel = path => {
-  return path.getStatementParent().parentPath.isProgram()
+const hasCallableParent = ({ parentPath }) => parentPath.isCallExpression() || parentPath.isNewExpression()
+
+const isUsedAsCallee = path => {
+  if (!hasCallableParent(path)) {
+    return false
+  }
+
+  return path.parentPath.get('callee') === path
 }
 
+const isTopLevel = path => path.getStatementParent().parentPath.isProgram()
+
 const isIIFE = path => {
-  return (
-    path.isCallExpression() &&
-    (path.get('callee').isFunctionExpression() || path.get('callee').isArrowFunctionExpression())
-  )
+  const callee = path.get('callee')
+  return path.isCallExpression() && (callee.isFunctionExpression() || callee.isArrowFunctionExpression())
+}
+
+const callableExpressionVisitor = path => {
+  if (isUsedAsCallee(path)) {
+    // TODO: check if it's ok to call path.skip here
+    return
+  }
+
+  if (!isTopLevel(path)) {
+    let functionParent
+
+    do {
+      functionParent = (functionParent || path).getFunctionParent()
+
+      if (!isIIFE(functionParent.parentPath)) {
+        return
+      }
+    } while (!isTopLevel(functionParent))
+  }
+
+  const statement = path.getStatementParent()
+
+  if (statement.isExportDefaultDeclaration()) {
+    annotateAsPure(path)
+    return
+  }
+
+  let parentPath
+
+  do {
+    ;({ parentPath } = parentPath || path)
+
+    if (parentPath.isVariableDeclaration() || parentPath.isAssignmentExpression()) {
+      annotateAsPure(path)
+      return
+    }
+  } while (parentPath !== statement)
 }
 
 export default () => ({
   inherits: syntax,
   visitor: {
-    'CallExpression|NewExpression'(path) {
+    CallExpression(path) {
       const callee = path.get('callee')
 
       if (callee.isIdentifier() && callee.get('name').node === 'require') {
@@ -39,35 +82,8 @@ export default () => ({
         return
       }
 
-      if (!isTopLevel(path)) {
-        let functionParent
-
-        do {
-          functionParent = (functionParent || path).getFunctionParent()
-
-          if (!isIIFE(functionParent.parentPath)) {
-            return
-          }
-        } while (!isTopLevel(functionParent))
-      }
-
-      const statement = path.getStatementParent()
-
-      if (statement.isExportDefaultDeclaration()) {
-        annotateAsPure(path)
-        return
-      }
-
-      let parentPath
-
-      do {
-        ;({ parentPath } = parentPath || path)
-
-        if (parentPath.isVariableDeclaration() || parentPath.isAssignmentExpression()) {
-          annotateAsPure(path)
-          return
-        }
-      } while (parentPath !== statement)
+      callableExpressionVisitor(path)
     },
+    NewExpression: callableExpressionVisitor,
   },
 })
