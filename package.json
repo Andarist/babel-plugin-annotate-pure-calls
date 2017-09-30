@@ -49,8 +49,8 @@
     "prepare": "npm run build",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
     "prerelease": "npm run prepare && npm test",
-    "release:patch": "npm run prerelease && npm version patch && git push --follow-tags && npm publish",
-    "release:minor": "npm run prerelease && npm version minor && git push --follow-tags && npm publish",
-    "release:major": "npm run prerelease && npm version major && git push --follow-tags && npm publish"
+    "release:patch": "npm run prerelease && npm version patch && npm publish && git push --follow-tags",
+    "release:minor": "npm run prerelease && npm version minor && npm publish && git push --follow-tags",
+    "release:major": "npm run prerelease && npm version major && npm publish && git push --follow-tags"
   }
 }
