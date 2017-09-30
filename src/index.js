@@ -29,41 +29,54 @@ const isUsedAsCallee = path => {
 
 const isTopLevel = path => path.getStatementParent().parentPath.isProgram()
 
-const callableExpressionVisitor = path => {
-  if (isUsedAsCallee(path)) {
-    path.skip()
-    return
+const isExecutedDuringInitialization = path => {
+  if (isTopLevel(path)) {
+    return true
   }
 
-  if (!isTopLevel(path)) {
-    let functionParent
+  let functionParent
 
-    do {
-      functionParent = (functionParent || path).getFunctionParent()
+  do {
+    functionParent = (functionParent || path).getFunctionParent()
 
-      if (!isUsedAsCallee(functionParent)) {
-        return
-      }
-    } while (!isTopLevel(functionParent))
-  }
+    if (!isUsedAsCallee(functionParent)) {
+      return false
+    }
+  } while (!isTopLevel(functionParent))
 
+  return true
+}
+
+const isInAssignmentContext = path => {
   const statement = path.getStatementParent()
-
-  if (statement.isExportDefaultDeclaration()) {
-    annotateAsPure(path)
-    return
-  }
-
   let parentPath
 
   do {
     ;({ parentPath } = parentPath || path)
 
     if (parentPath.isVariableDeclaration() || parentPath.isAssignmentExpression()) {
-      annotateAsPure(path)
-      return
+      return true
     }
   } while (parentPath !== statement)
+
+  return false
+}
+
+const callableExpressionVisitor = path => {
+  if (isUsedAsCallee(path)) {
+    path.skip()
+    return
+  }
+
+  if (!isExecutedDuringInitialization(path)) {
+    return
+  }
+
+  if (!isInAssignmentContext(path) && !path.getStatementParent().isExportDefaultDeclaration()) {
+    return
+  }
+
+  annotateAsPure(path)
 }
 
 export default () => ({
