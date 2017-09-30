@@ -82,16 +82,6 @@ const callableExpressionVisitor = path => {
 export default () => ({
   inherits: syntax,
   visitor: {
-    CallExpression(path) {
-      const callee = path.get('callee')
-
-      if (callee.isIdentifier() && callee.get('name').node === 'require') {
-        path.skip()
-        return
-      }
-
-      callableExpressionVisitor(path)
-    },
-    NewExpression: callableExpressionVisitor,
+    'CallExpression|NewExpression': callableExpressionVisitor,
   },
 })
