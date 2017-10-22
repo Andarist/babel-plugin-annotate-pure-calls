@@ -1,21 +1,5 @@
-import syntax from 'babel-plugin-syntax-dynamic-import'
-
-const PURE_ANNOTATION = '#__PURE__'
-
-const isPureAnnotated = node => {
-  const { leadingComments } = node
-  if (leadingComments === undefined) {
-    return false
-  }
-  return leadingComments.some(comment => /[@#]__PURE__/.test(comment.value))
-}
-
-function annotateAsPure(path) {
-  if (isPureAnnotated(path.node)) {
-    return
-  }
-  path.addComment('leading', PURE_ANNOTATION)
-}
+import syntax from '@babel/plugin-syntax-dynamic-import'
+import annotateAsPure from '@babel/helper-annotate-as-pure'
 
 const hasCallableParent = ({ parentPath }) => parentPath.isCallExpression() || parentPath.isNewExpression()
 
@@ -39,22 +23,16 @@ const isInCallee = path => {
   return false
 }
 
-const isTopLevel = path => path.getFunctionParent().isProgram()
-
 const isExecutedDuringInitialization = path => {
-  if (isTopLevel(path)) {
-    return true
-  }
+  let functionParent = path.getFunctionParent()
 
-  let functionParent
-
-  do {
-    functionParent = (functionParent || path).getFunctionParent()
-
+  while (functionParent) {
     if (!isUsedAsCallee(functionParent)) {
       return false
     }
-  } while (!isTopLevel(functionParent))
+
+    functionParent = functionParent.getFunctionParent()
+  }
 
   return true
 }

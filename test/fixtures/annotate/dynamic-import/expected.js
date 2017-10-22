@@ -1,1 +1,3 @@
-saga = /*#__PURE__*/import('notifications');
+saga =
+/*#__PURE__*/
+import('notifications');

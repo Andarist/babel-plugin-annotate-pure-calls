@@ -1,1 +1,3 @@
-export default /*#__PURE__*/curry(lighten);
+export default
+/*#__PURE__*/
+curry(lighten);

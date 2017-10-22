@@ -1,3 +1,3 @@
 {
-  "plugins": ["annotate-pure-calls", "transform-es2015-spread"]
+  "plugins": ["annotate-pure-calls", "@babel/transform-spread"]
 }

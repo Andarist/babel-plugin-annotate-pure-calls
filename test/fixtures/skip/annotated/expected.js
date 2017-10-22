@@ -1,1 +1,3 @@
-var inc = /*#__PURE__*/add(1);
+var inc =
+/*#__PURE__*/
+add(1);
