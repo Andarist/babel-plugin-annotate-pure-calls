@@ -27,6 +27,18 @@ const isUsedAsCallee = path => {
   return path.parentPath.get('callee') === path
 }
 
+const isInCallee = path => {
+  do {
+    path = path.parentPath
+
+    if (isUsedAsCallee(path)) {
+      return true
+    }
+  } while (!path.isStatement() && !path.isFunction())
+
+  return false
+}
+
 const isTopLevel = path => path.getFunctionParent().isProgram()
 
 const isExecutedDuringInitialization = path => {
@@ -63,8 +75,7 @@ const isInAssignmentContext = path => {
 }
 
 const callableExpressionVisitor = path => {
-  if (isUsedAsCallee(path)) {
-    path.skip()
+  if (isUsedAsCallee(path) || isInCallee(path)) {
     return
   }
 

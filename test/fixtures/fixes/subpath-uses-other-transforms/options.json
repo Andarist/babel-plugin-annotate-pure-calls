@@ -1,0 +1,3 @@
+{
+  "plugins": ["annotate-pure-calls", "transform-es2015-spread"]
+}
