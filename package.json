@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-annotate-pure-calls",
-  "version": "0.2.1",
+  "version": "0.3.0-beta.0",
   "description": "Babel plugin for annotating automatically pure function calls.",
   "author": "Mateusz Burzyński <mateuszburzynski@gmail.com> (https://github.com/Andarist)",
   "license": "MIT",
