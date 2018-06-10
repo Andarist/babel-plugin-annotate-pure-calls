@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-annotate-pure-calls",
-  "version": "0.2.2",
+  "version": "0.3.0-beta.0",
   "description": "Babel plugin for annotating automatically pure function calls.",
   "author": "Mateusz Burzyński <mateuszburzynski@gmail.com> (https://github.com/Andarist)",
   "license": "MIT",
@@ -23,34 +23,30 @@
     "url": "https://github.com/Andarist/babel-plugin-annotate-pure-calls/issues"
   },
   "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme",
-  "dependencies": {
-    "babel-plugin-syntax-dynamic-import": "^6.18.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "babel-core": "6"
+    "babel-core": "6.x || ^7.0.0-0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-helper-plugin-test-runner": "^6.24.1",
-    "babel-jest": "^21.0.2",
-    "babel-preset-env": "^1.6.0",
+    "@babel/cli": "7.0.0-beta.49",
+    "@babel/core": "7.0.0-beta.49",
+    "@babel/preset-env": "7.0.0-beta.49",
+    "babel-core": "^6.26.3",
+    "babel-plugin-tester": "^5.4.0",
     "husky": "^0.14.3",
-    "jest": "^21.1.0",
-    "lint-staged": "^4.2.2",
-    "prettier": "^1.7.0"
+    "jest": "^23.1.0",
+    "lint-staged": "^7.1.3",
+    "prettier": "^1.13.5"
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "self-link": "npm link && npm link $npm_package_name",
-    "pretest": "if [ ! -d ./node_modules/$npm_package_name ]; then npm run self-link; else npm run build; fi",
+    "pretest": "npm run build",
     "test": "jest",
-    "test-only": "jest",
     "precommit": "lint-staged",
-    "prepare": "npm run build",
+    "prepare": "npm test",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
-    "prerelease": "npm run prepare && npm test",
-    "release:patch": "npm run prerelease && npm version patch && npm publish && git push --follow-tags",
-    "release:minor": "npm run prerelease && npm version minor && npm publish && git push --follow-tags",
-    "release:major": "npm run prerelease && npm version major && npm publish && git push --follow-tags"
+    "release:patch": "npm version patch && npm publish && git push --follow-tags",
+    "release:minor": "npm version minor && npm publish && git push --follow-tags",
+    "release:major": "npm version major && npm publish && git push --follow-tags"
   }
 }

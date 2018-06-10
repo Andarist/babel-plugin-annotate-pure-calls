@@ -1,16 +1,16 @@
-import syntax from 'babel-plugin-syntax-dynamic-import'
-
 const PURE_ANNOTATION = '#__PURE__'
 
 const isPureAnnotated = node => {
   const { leadingComments } = node
+
   if (!leadingComments) {
     return false
   }
+
   return leadingComments.some(comment => /[@#]__PURE__/.test(comment.value))
 }
 
-function annotateAsPure(path) {
+const annotateAsPure = path => {
   if (isPureAnnotated(path.node)) {
     return
   }
@@ -39,22 +39,21 @@ const isInCallee = path => {
   return false
 }
 
-const isTopLevel = path => path.getFunctionParent().isProgram()
-
 const isExecutedDuringInitialization = path => {
-  if (isTopLevel(path)) {
-    return true
-  }
+  let functionParent = path.getFunctionParent()
 
-  let functionParent
-
-  do {
-    functionParent = (functionParent || path).getFunctionParent()
+  while (functionParent) {
+    // babel@6 returns "incorrectly" program as function parent
+    if (functionParent.isProgram()) {
+      return true
+    }
 
     if (!isUsedAsCallee(functionParent)) {
       return false
     }
-  } while (!isTopLevel(functionParent))
+
+    functionParent = functionParent.getFunctionParent()
+  }
 
   return true
 }
@@ -91,7 +90,7 @@ const callableExpressionVisitor = path => {
 }
 
 export default () => ({
-  inherits: syntax,
+  name: 'annotate-pure-calls',
   visitor: {
     'CallExpression|NewExpression': callableExpressionVisitor,
   },
