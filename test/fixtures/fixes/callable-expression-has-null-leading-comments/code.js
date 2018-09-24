@@ -1,3 +1,3 @@
-const test = () => {};
+const test = () => {}
 /* eslint-disable babel/new-cap */
-export default test();
+export default test()

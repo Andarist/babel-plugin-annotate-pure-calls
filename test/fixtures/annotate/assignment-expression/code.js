@@ -1,1 +1,1 @@
-inc = add(1), dec = sub(1)
+;(inc = add(1)), (dec = sub(1))

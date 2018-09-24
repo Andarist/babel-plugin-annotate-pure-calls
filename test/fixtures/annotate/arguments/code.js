@@ -1,1 +1,1 @@
-inc = add(one()), dec = sub(one())
+;(inc = add(one())), (dec = sub(one()))
