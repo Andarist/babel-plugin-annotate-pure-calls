@@ -1,3 +1,4 @@
+;
 inc =
 /*#__PURE__*/
 add(1), dec =
