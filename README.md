@@ -76,6 +76,11 @@ require('babel-core').transform('var inc = add(1)', {
 })
 ```
 
+### Usage with babel@6
+
+The plugin works with babel@6, you might see unmet peer dependency warning though. If you want to get rid of it, please
+install `@babel/core@6.0.0-bridge.1`.
+
 ## Similar projects
 
 - [annotate-pure-call-in-variable-declarator](https://github.com/morlay/babel-plugin-annotate-pure-call-in-variable-declarator)

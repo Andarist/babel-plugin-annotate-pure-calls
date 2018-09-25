@@ -25,7 +25,7 @@
   "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme",
   "dependencies": {},
   "peerDependencies": {
-    "babel-core": "6.x || ^7.0.0-0"
+    "@babel/core": "^6.0.0-0 || 7.x"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
