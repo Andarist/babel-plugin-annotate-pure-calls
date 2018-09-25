@@ -44,8 +44,9 @@
     "pretest": "npm run build",
     "test": "jest",
     "precommit": "lint-staged",
-    "prepare": "npm test",
+    "prepare": "npm run build",
     "prepublish": "test $(npm -v | tr . '\\n' | head -n 1) -ge '4' || exit 1",
+    "preversion": "npm test",
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
     "release:major": "npm version major && npm publish && git push --follow-tags"
