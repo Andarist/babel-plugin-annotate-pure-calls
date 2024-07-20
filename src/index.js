@@ -65,7 +65,7 @@ const isInAssignmentContext = path => {
   do {
     ;({ parentPath } = parentPath || path)
 
-    if (parentPath.isVariableDeclaration() || parentPath.isAssignmentExpression()) {
+    if (parentPath.isVariableDeclaration() || parentPath.isAssignmentExpression() || parentPath.isClassDeclaration()) {
       return true
     }
   } while (parentPath !== statement)
