@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
