@@ -17,7 +17,8 @@ const annotateAsPure = path => {
   path.addComment('leading', PURE_ANNOTATION)
 }
 
-const hasCallableParent = ({ parentPath }) => parentPath.isCallExpression() || parentPath.isNewExpression()
+const hasCallableParent = ({ parentPath }) =>
+  parentPath.isCallExpression() || parentPath.isNewExpression()
 
 const isUsedAsCallee = path => {
   if (!hasCallableParent(path)) {
@@ -43,11 +44,6 @@ const isExecutedDuringInitialization = path => {
   let functionParent = path.getFunctionParent()
 
   while (functionParent) {
-    // babel@6 returns "incorrectly" program as function parent
-    if (functionParent.isProgram()) {
-      return true
-    }
-
     if (!isUsedAsCallee(functionParent)) {
       return false
     }
@@ -65,7 +61,11 @@ const isInAssignmentContext = path => {
   do {
     ;({ parentPath } = parentPath || path)
 
-    if (parentPath.isVariableDeclaration() || parentPath.isAssignmentExpression() || parentPath.isClassDeclaration() || parentPath.isClassExpression()) {
+    if (
+      parentPath.isVariableDeclaration() ||
+      parentPath.isAssignmentExpression() ||
+      parentPath.isClass()
+    ) {
       return true
     }
   } while (parentPath !== statement)
@@ -82,7 +82,10 @@ const callableExpressionVisitor = path => {
     return
   }
 
-  if (!isInAssignmentContext(path) && !path.getStatementParent().isExportDefaultDeclaration()) {
+  if (
+    !isInAssignmentContext(path) &&
+    !path.getStatementParent().isExportDefaultDeclaration()
+  ) {
     return
   }
 

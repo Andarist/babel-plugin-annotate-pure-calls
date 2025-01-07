@@ -1,6 +1,6 @@
 {
   "*.{js,md}": [
-    "prettier --print-width=120 --single-quote --no-semi --trailing-comma=all --prose-wrap always --write",
+    "prettier --write",
     "git add"
   ]
 }
