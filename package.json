@@ -4,6 +4,9 @@
   "description": "Babel plugin for annotating automatically pure function calls.",
   "author": "Mateusz Burzyński <mateuszburzynski@gmail.com> (https://github.com/Andarist)",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "main": "dist/babel-plugin-annotate-pure-calls.cjs.js",
   "module": "dist/babel-plugin-annotate-pure-calls.esm.js",
   "exports": {
