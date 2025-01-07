@@ -1,1 +1,1 @@
-export const inc = /*#__PURE__*/ add(1)
+export const inc = /*#__PURE__*/add(1);

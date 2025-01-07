@@ -1,1 +1,1 @@
-a = /*#__PURE__*/ new new new WeirdoClass()()()
+a = /*#__PURE__*/new new new WeirdoClass()()();

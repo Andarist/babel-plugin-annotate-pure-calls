@@ -1,7 +1,7 @@
-a = /*#__PURE__*/ (function() {
+a = /*#__PURE__*/function () {
   function b() {
-    var c = (function() {
-      var d = call()
-    })()
+    var c = function () {
+      var d = call();
+    }();
   }
-})()
+}();
