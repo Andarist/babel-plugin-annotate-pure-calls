@@ -6,10 +6,9 @@ module.exports = {
         loose: true,
         modules: false,
         targets: {
-          node: 6,
+          node: 18,
         },
       },
     ],
   ],
-  plugins: ['@babel/transform-modules-commonjs'],
 }
