@@ -63,7 +63,8 @@ const isInAssignmentContext = path => {
 
     if (
       parentPath.isVariableDeclaration() ||
-      parentPath.isAssignmentExpression()
+      parentPath.isAssignmentExpression() ||
+      parentPath.isClass()
     ) {
       return true
     }
