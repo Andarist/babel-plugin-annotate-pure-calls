@@ -25,14 +25,13 @@
   "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme",
   "dependencies": {},
   "peerDependencies": {
-    "@babel/core": "^6.0.0-0 || 7.x"
+    "@babel/core": "^7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",
     "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
-    "babel-core": "^6.26.3",
     "babel-plugin-tester": "^5.4.0",
     "husky": "^0.14.3",
     "jest": "^23.1.0",
@@ -50,5 +49,12 @@
     "release:patch": "npm version patch && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
     "release:major": "npm version major && npm publish && git push --follow-tags"
+  },
+  "prettier": {
+    "lineWidth": 120,
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all",
+    "proseWrap": "always"
   }
 }
