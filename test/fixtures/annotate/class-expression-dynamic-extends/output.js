@@ -3,5 +3,4 @@ const base = bar => class {
     return bar;
   }
 };
-
-class MyClass extends /*#__PURE__*/base() {}
+const MyClass = class extends /*#__PURE__*/base() {};
