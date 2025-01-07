@@ -4,9 +4,22 @@
   "description": "Babel plugin for annotating automatically pure function calls.",
   "author": "Mateusz Burzyński <mateuszburzynski@gmail.com> (https://github.com/Andarist)",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "dist/babel-plugin-annotate-pure-calls.cjs.js",
+  "module": "dist/babel-plugin-annotate-pure-calls.esm.js",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/babel-plugin-annotate-pure-calls.cjs.mjs",
+        "default": "./dist/babel-plugin-annotate-pure-calls.cjs.js"
+      },
+      "module": "./dist/babel-plugin-annotate-pure-calls.esm.js",
+      "import": "./dist/babel-plugin-annotate-pure-calls.cjs.mjs",
+      "default": "./dist/babel-plugin-annotate-pure-calls.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
-    "lib"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -23,7 +36,6 @@
     "url": "https://github.com/Andarist/babel-plugin-annotate-pure-calls/issues"
   },
   "homepage": "https://github.com/Andarist/babel-plugin-annotate-pure-calls#readme",
-  "dependencies": {},
   "peerDependencies": {
     "@babel/core": "^7.0.0"
   },
@@ -32,6 +44,7 @@
     "@babel/core": "^7.1.0",
     "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "@preconstruct/cli": "^2.8.10",
     "babel-plugin-tester": "^5.4.0",
     "husky": "^0.14.3",
     "jest": "^23.1.0",
@@ -39,7 +52,7 @@
     "prettier": "^1.13.5"
   },
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "preconstruct build",
     "pretest": "npm run build",
     "test": "jest",
     "precommit": "lint-staged",
@@ -56,5 +69,13 @@
     "semi": false,
     "trailingComma": "all",
     "proseWrap": "always"
+  },
+  "preconstruct": {
+    "exports": {
+      "importConditionDefaultExport": "default"
+    },
+    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
+      "importsConditions": true
+    }
   }
 }
